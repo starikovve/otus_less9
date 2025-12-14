@@ -2,10 +2,9 @@
 Administrator Linux. Professional
 Написать service, который будет раз в 30 секунд мониторить лог на предмет наличия ключевого слова (файл лога и ключевое слово должны задаваться в /etc/default).
 
-Мы создадим три файла: файл конфигурации, скрипт с логикой и unit-файл для systemd.
-1. Файл конфигурации
-nano /etc/default/log-monitor
-
+#Мы создадим три файла: файл конфигурации, скрипт с логикой и unit-файл для systemd.
+#1. Файл конфигурации
+cat > /etc/default/log-monitor <<EOF
 # /etc/default/log-monitor
 
 # Полный путь к файлу лога
@@ -13,15 +12,17 @@ LOG_FILE="/var/log/syslog"
 
 # Ключевое слово для поиска
 KEYWORD="ERROR"
+###
+
+EOF
 
 <img width="333" height="127" alt="image" src="https://github.com/user-attachments/assets/5ba4465d-5b37-4c2d-9a3a-6b0af4efb44f" />
 
 2. Скрипт сервиса
 
-nano /usr/local/bin/log-monitor.sh
-
+cat > /usr/local/bin/log-monitor.sh <<EOF
 #!/bin/bash
-
+###
 # Загружаем настройки. Если файла нет, выходим с ошибкой.
 if [ -f /etc/default/log-monitor ]; then
     . /etc/default/log-monitor
@@ -51,13 +52,13 @@ while true; do
     sleep 30
 done
 
+EOF
 
 chmod +x /usr/local/bin/log-monitor.sh
 
 3. Unit-файл systemd
 
-nano /etc/systemd/system/log-monitor.service
-
+cat > /etc/systemd/system/log-monitor.service <<EOF
 [Unit]
 Description=Simple Log Monitor Service
 After=network.target
@@ -71,7 +72,8 @@ Restart=always
 
 [Install]
 WantedBy=multi-user.target
-
+###
+EOF
 
 systemctl daemon-reload
 systemctl enable --now log-monitor
