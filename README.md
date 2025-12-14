@@ -220,6 +220,9 @@ systemctl daemon-reload
 systemctl start nginx@first
 systemctl start nginx@second
 
+<img width="1113" height="136" alt="image" src="https://github.com/user-attachments/assets/d367e3ef-5583-4067-b679-7366c008b09b" />
+
+
 <img width="1126" height="329" alt="image" src="https://github.com/user-attachments/assets/6aa0bd6a-8274-4887-b28d-45287e706535" />
 
 
